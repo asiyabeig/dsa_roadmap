@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asiya's DSA Journey</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- Floating petals background -->
+  <div class="petals-container" id="petals"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-text">DSA Journey</span>
+        <span class="logo-dot"></span>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" onclick="showView('dashboard')">Dashboard</button>
+        <button class="nav-btn" onclick="showView('roadmap')">Roadmap</button>
+        <button class="nav-btn" onclick="showView('problems')">Problems</button>
+        <button class="nav-btn" onclick="showView('stats')">Stats</button>
+      </nav>
+      <div class="xp-badge">
+        <span class="xp-label">XP</span>
+        <span class="xp-value" id="headerXP">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard View -->
+  <div class="view active" id="view-dashboard">
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">100 Days Challenge</p>
+        <h1 class="hero-title">Your DSA<br /><em>Quest</em> begins.</h1>
+        <p class="hero-sub">Start slow. Stay consistent. Become the girl who sees patterns before she reads the problem.</p>
+        <button class="btn-primary" onclick="showView('roadmap')">Open Roadmap</button>
+      </div>
+      <div class="hero-card">
+        <div class="level-ring" id="levelRing">
+          <svg viewBox="0 0 120 120" class="ring-svg">
+            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+            <circle class="ring-progress" cx="60" cy="60" r="50" id="ringProgress"/>
+          </svg>
+          <div class="ring-center">
+            <span class="level-num" id="levelNum">1</span>
+            <span class="level-label">Level</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <span class="stat-val" id="statXP">0</span>
+            <span class="stat-name">Total XP</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-val" id="statSolved">0</span>
+            <span class="stat-name">Solved</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-val" id="statStreak">0</span>
+            <span class="stat-name">Day Streak</span>
+          </div>
+        </div>
+        <div class="level-title" id="levelTitle">Array Rookie</div>
+      </div>
+    </section>
+
+    <!-- Daily Task Strip -->
+    <section class="daily-section">
+      <div class="section-header">
+        <h2>Today's Focus</h2>
+        <span class="day-badge" id="todayDay">Day 1</span>
+      </div>
+      <div class="daily-card" id="dailyCard">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+    <!-- Phase Progress -->
+    <section class="phases-section">
+      <h2>Phase Progress</h2>
+      <div class="phases-grid" id="phasesGrid"></div>
+    </section>
+  </div>
+
+  <!-- Roadmap View -->
+  <div class="view" id="view-roadmap">
+    <div class="view-header">
+      <h2>100-Day Roadmap</h2>
+      <p>Tap any day to expand. Check off what you've done.</p>
+    </div>
+    <div class="phases-list" id="phasesList"></div>
+  </div>
+
+  <!-- Problems View -->
+  <div class="view" id="view-problems">
+    <div class="view-header">
+      <h2>Problem Bank</h2>
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="filterProblems('all', this)">All</button>
+        <button class="filter-btn" onclick="filterProblems('easy', this)">Easy</button>
+        <button class="filter-btn" onclick="filterProblems('medium', this)">Medium</button>
+        <button class="filter-btn" onclick="filterProblems('hard', this)">Hard</button>
+        <button class="filter-btn" onclick="filterProblems('solved', this)">Done</button>
+      </div>
+    </div>
+    <div class="problems-grid" id="problemsGrid"></div>
+  </div>
+
+  <!-- Stats View -->
+  <div class="view" id="view-stats">
+    <div class="view-header">
+      <h2>Your Progress</h2>
+    </div>
+    <div class="stats-page">
+      <div class="stat-cards-row">
+        <div class="stat-card">
+          <div class="stat-big" id="s-xp">0</div>
+          <div class="stat-desc">Total XP Earned</div>
+        </div>
+        <div class="stat-card accent-green">
+          <div class="stat-big" id="s-solved">0</div>
+          <div class="stat-desc">Problems Solved</div>
+        </div>
+        <div class="stat-card accent-lavender">
+          <div class="stat-big" id="s-streak">0</div>
+          <div class="stat-desc">Day Streak</div>
+        </div>
+        <div class="stat-card accent-peach">
+          <div class="stat-big" id="s-level">1</div>
+          <div class="stat-desc">Current Level</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <h3>XP to Next Level</h3>
+        <div class="big-progress">
+          <div class="big-bar" id="bigBar"></div>
+        </div>
+        <div class="progress-labels">
+          <span id="xpCurrent">0 XP</span>
+          <span id="xpNext">200 XP</span>
+        </div>
+      </div>
+
+      <div class="levels-section">
+        <h3>Level Milestones</h3>
+        <div class="levels-list">
+          <div class="level-row" id="lrow-1"><span class="lbadge">Lv 1</span><span class="lname">Array Rookie</span><span class="lxp">0 XP</span></div>
+          <div class="level-row" id="lrow-2"><span class="lbadge">Lv 2</span><span class="lname">Pattern Hunter</span><span class="lxp">200 XP</span></div>
+          <div class="level-row" id="lrow-3"><span class="lbadge">Lv 3</span><span class="lname">Medium Slayer</span><span class="lxp">600 XP</span></div>
+          <div class="level-row" id="lrow-4"><span class="lbadge">Lv 4</span><span class="lname">Interview Ready</span><span class="lxp">1200 XP</span></div>
+          <div class="level-row" id="lrow-5"><span class="lbadge">Lv 5</span><span class="lname">DSA Queen</span><span class="lxp">2200 XP</span></div>
+        </div>
+      </div>
+
+      <div class="reset-zone">
+        <button class="btn-ghost" onclick="confirmReset()">Reset All Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- XP Pop -->
+  <div class="xp-pop" id="xpPop"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
